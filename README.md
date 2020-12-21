@@ -1,13 +1,14 @@
 # note_app
 
-## Bài thực hành chương 4: Xây dựng các chức năng,hiển thị listview, thêm, sửa, xem chi tiết của ứng dụng Note
+## Bài thực hành chương 4: Xây dựng các chức năng, hiển thị listview, thêm, sửa, xoá, xem chi tiết của ứng dụng Note
 
 ### Descript quá trình xây dựng ứng dụng Note
 
 1. Tạo giao diện hiển thị listview note.
 1. Tạo chức năng thêm ghi chú.
 1. Tạo chức năng sửa(update) ghi chú.
-1. Tạo chức năng xem chi tiết(add) ghi chú.
+1. Tạo chức năng xoá ghi chú.
+1. Tạo chức năng xem chi tiết(detail) ghi chú.
 
 ### Mã nguồn **note_view.dart** : Hiển thị danh sách ghi chú
 
