@@ -70,7 +70,7 @@ class NoteView extends StatelessWidget {
 
 ![Image: Animate a widget across screens](./_view.png)
 
-### Mã nguồn **note_viewmodel.dart** : Chức năng thêm ghi chú
+### Mã nguồn **note_viewmodel.dart** : Chức năng thêm ghi chú (ngày 21/12/2020)
 
 ```
 import 'package:flutter/material.dart';
