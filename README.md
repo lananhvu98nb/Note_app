@@ -21,63 +21,63 @@ import 'note_viewmodel.dart';
 import 'note_model.dart';
 
 class NoteView extends StatelessWidget {
-@override
-Widget build(BuildContext context) {
-return ViewModelBuilder<NoteViewModel>.reactive(
-onModelReady: (model) => model.init(),
-builder: (context, model, child) => Scaffold(
-appBar: AppBar(title: Text(model.title)),
-body: Stack(
-children: [
-model.state == NoteViewState.listView
-? ListView.builder(
-itemCount: model.items.length,
-itemBuilder: (BuildContext context, int index) {
-Note item = model.items[index];
-return ListTile(
-title: Text(item.title),
-subtitle: Text(item.desc),
-onTap: () {
-model.editingItem = item;
-model.state = NoteViewState.itemView;
-},
-);
-},
-)
-: model.state == NoteViewState.itemView
-? NoteViewItem()
-: model.state == NoteViewState.updateView
-? NoteViewItemEdit()
-: SizedBox(),
-],
-),
-floatingActionButton: model.state == NoteViewState.listView
-? FloatingActionButton(
-child: Icon(Icons.add),
-onPressed: () {
-model.addItem();
-},
-)
-: null,
-),
-viewModelBuilder: () => NoteViewModel(),
-);
-}
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<NoteViewModel>.reactive(
+      onModelReady: (model) => model.init(),
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(title: Text(model.title)),
+        body: Stack(
+          children: [
+            model.state == NoteViewState.listView
+                ? ListView.builder(
+                    itemCount: model.items.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Note item = model.items[index];
+                      return ListTile(
+                        title: Text(item.title),
+                        subtitle: Text(item.desc),
+                        onTap: () {
+                          model.editingItem = item;
+                          model.state = NoteViewState.itemView;
+                        },
+                      );
+                    },
+                  )
+                : model.state == NoteViewState.itemView
+                    ? NoteViewItem()
+                    : model.state == NoteViewState.updateView
+                        ? NoteViewItemEdit()
+                        : SizedBox(),
+          ],
+        ),
+        floatingActionButton: model.state == NoteViewState.listView
+            ? FloatingActionButton(
+                child: Icon(Icons.add),
+                onPressed: () {
+                  model.addItem();
+                },
+              )
+            : null,
+      ),
+      viewModelBuilder: () => NoteViewModel(),
+    );
+  }
 }
 ```
 
 - Result note_view.dart:
 
-![Image: Animate a widget across screens](./images/_view.png)
+![Image: Animate a widget across screens](./_view.png)
 
 ### Mã nguồn **note_viewmodel.dart** : Chức năng thêm ghi chú
 
 ```
 import 'package:flutter/material.dart';
+import 'package:mynote/ui/views/note/note_repository.dart';
 import 'package:stacked/stacked.dart';
 
 import 'note_model.dart';
-import 'note_repository.dart';
 
 /// Trạng thái của view
 enum NoteViewState { listView, itemView, insertView, updateView }
@@ -148,6 +148,9 @@ class NoteViewModel extends BaseViewModel {
   }
 
   void saveItem() {
+    // TODO lưu editingItem
+
+    // TODO editingItem = null
     editingItem = null;
     notifyListeners();
   }
@@ -156,16 +159,15 @@ class NoteViewModel extends BaseViewModel {
 
 - Result note_viewmodel.dart:
 
-![Image: Animate a widget across screens](./images/_view_insert.png)
+![Image: Animate a widget across screens](./_view_insert.png)
 
 ### Mã nguồn **note_view_item_edit.dart:** : Chức năng sửa ghi chú
 
 ```
 import 'package:flutter/material.dart';
-
+import 'package:mynote/ui/views/note/note_model.dart';
+import 'package:mynote/ui/views/note/note_viewmodel.dart';
 import 'package:stacked/stacked.dart';
-
-import '../note_viewmodel.dart';
 
 class NoteViewItemEdit extends ViewModelWidget<NoteViewModel> {
   final _formKey = GlobalKey<FormState>();
@@ -213,16 +215,15 @@ class NoteViewItemEdit extends ViewModelWidget<NoteViewModel> {
 
 - Result note_view_item_edit.dart:
 
-![Image: Animate a widget across screens](./images/_edit.png)
+![Image: Animate a widget across screens](./_edit.png)
 
 ### Mã nguồn **note_view_item.dart:** : Chức năng xem chi tiết ghi chú
 
 ```
 import 'package:flutter/material.dart';
-
+import 'package:mynote/ui/views/note/note_model.dart';
+import 'package:mynote/ui/views/note/note_viewmodel.dart';
 import 'package:stacked/stacked.dart';
-
-import '../note_viewmodel.dart';
 
 class NoteViewItem extends ViewModelWidget<NoteViewModel> {
   @override
@@ -236,7 +237,8 @@ class NoteViewItem extends ViewModelWidget<NoteViewModel> {
         ),
         actions: [
           IconButton(
-              icon: Icon(Icons.edit), onPressed: () => model.updateItem())
+              icon: Icon(Icons.edit),
+              onPressed: () => model.updateItem())
         ],
       ),
       body: Center(
@@ -252,5 +254,5 @@ class NoteViewItem extends ViewModelWidget<NoteViewModel> {
 
 - Result note_view_item.dart:
 
-![Image: Animate a widget across screens](./images/_detail.png)
+![Image: Animate a widget across screens](./_detail.png)
 
